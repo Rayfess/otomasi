@@ -3,25 +3,25 @@
 # Variabel Konfigurasi
 VLAN_INTERFACE="eth1.10"
 VLAN_ID=10
-IP_ADDR="$IP_Router$IP_Pref"      # IP address untuk interface VLAN di Ubuntu
+IP_ADDR="$IP_Router/$IP_Pref"      # IP address untuk interface VLAN di Ubuntu
 DHCP_CONF="/etc/dhcp/dhcpd.conf" #Tempat Konfigurasi DHCP
-SWITCH_IP="192.168.$IP_A.35"       # IP Cisco Switch yang diperbarui
 MIKROTIK_IP="192.168.200.1"     # IP MikroTik yang baru
 USER_SWITCH="root"              # Username SSH untuk Cisco Switch
 USER_MIKROTIK="admin"           # Username SSH default MikroTik
 PASSWORD_SWITCH="root"          # Password untuk Cisco Switch
 PASSWORD_MIKROTIK=""            # Kosongkan jika MikroTik tidak memiliki password
+IPROUTE_ADD="192.168.200.0"
 
 # Konfigurasi Untuk Seleksi Tiap IP
 #Konfigurasi IP Range dan IP Yang Anda Inginkan
-IP_A= "17" 
-IP_B= "200"
-IP_BC= "255.255.255.0"
-IP_Subnet= "192.168.$IP_A.0"
-IP_Router= "192.168.$IP_A.1"
-IP_Range= "192.168.$IP_A.0 192.168.$IP_A.$IP_B"
-IP_DNS= "8.8.8.8 8.8.4.4"
-IP_Pref= "24"
+IP_A="17"
+IP_B="200"
+IP_BC="255.255.255.0"
+IP_Subnet="192.168.$IP_A.0"
+IP_Router="192.168.$IP_A.1"
+IP_Range="192.168.$IP_A.2 192.168.$IP_A.$IP_B"
+IP_DNS="8.8.8.8 8.8.4.4"
+IP_Pref="/24"
 
 set -e
 
@@ -80,7 +80,7 @@ sudo systemctl status isc-dhcp-server
 
 # Konfigurasi Routing di Ubuntu Server
 echo "Menambahkan konfigurasi routing..."
-ip route add 192.168.200.0/$IP_Pref via $MIKROTIK_IP
+ip route add $IPROUTE_ADD/$IP_Pref via $MIKROTIK_IP
 
 # Mengaktifkan IP forwarding dan mengonfigurasi IPTables
 echo "Mengaktifkan IP forwarding dan mengonfigurasi IPTables..."
@@ -113,17 +113,16 @@ if [ -z "$PASSWORD_MIKROTIK" ]; then
     ssh -o StrictHostKeyChecking=no $USER_MIKROTIK@$MIKROTIK_IP <<EOF
 interface vlan add name=vlan10 vlan-id=$VLAN_ID interface=ether1
 ip address add address=$IP_Router/$IP_Pref interface=vlan10      # Sesuaikan dengan IP di VLAN Ubuntu
-ip address add address=192.168.200.1/$IP_Pref interface=ether2     # IP address MikroTik di network lain
+ip address add address=$MIKROTIK_IP/$IP_Pref interface=ether2     # IP address MikroTik di network lain
 ip route add dst-address=$IP_Router/$IP_Pref gateway=$IP_Router
 EOF
 else
     sshpass -p "$PASSWORD_MIKROTIK" ssh -o StrictHostKeyChecking=no $USER_MIKROTIK@$MIKROTIK_IP <<EOF
 interface vlan add name=vlan10 vlan-id=$VLAN_ID interface=ether1
 ip address add address=$IP_Router/$IP_Pref interface=vlan10      # Sesuaikan dengan IP di VLAN Ubuntu
-ip address add address=192.168.200.1/$IP_Pref interface=ether2     # IP address MikroTik di network lain
+ip address add address=$MIKROTIK_IP/$IP_Pref interface=ether2     # IP address MikroTik di network lain
 ip route add dst-address=$IP_Router/$IP_Pref gateway=$IP_Router
 EOF
 fi
-
 
 echo "Otomasi konfigurasi selesai."
