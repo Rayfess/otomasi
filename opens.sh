@@ -3,7 +3,7 @@
 # Variabel Konfigurasi
 VLAN_INTERFACE="eth1.10"
 VLAN_ID=10
-IP_ADDR="$IP_Router/$IP_Pref"      # IP address untuk interface VLAN di Ubuntu
+IP_ADDR="$IP_Router$IP_Pref"      # IP address untuk interface VLAN di Ubuntu
 DHCP_CONF="/etc/dhcp/dhcpd.conf" #Tempat Konfigurasi DHCP
 MIKROTIK_IP="192.168.200.1"     # IP MikroTik yang baru
 USER_SWITCH="root"              # Username SSH untuk Cisco Switch
