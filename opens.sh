@@ -22,7 +22,7 @@ IP_BC="255.255.255.0"
 IP_Subnet="192.168.$IP_A.0"
 IP_Router="192.168.$IP_A.1"
 IP_Range="192.168.$IP_A.$IP_C 192.168.$IP_A.$IP_B"
-IP_DNS="8.8.8.8 8.8.4.4"
+IP_DNS="8.8.8.8, 8.8.4.4"
 IP_Pref="/24"
 
 set -e
