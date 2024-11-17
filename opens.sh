@@ -12,7 +12,7 @@ USER_SWITCH="root"              # Username SSH untuk Cisco Switch
 USER_MIKROTIK="admin"           # Username SSH default MikroTik
 PASSWORD_SWITCH="root"          # Password untuk Cisco Switch
 PASSWORD_MIKROTIK=""            # Kosongkan jika MikroTik tidak memiliki password
-IPROUTE_ADD="192.168.200.0$IP_PREF"
+IPROUTE_ADD="192.168.200.0/24"
 
 # Konfigurasi Untuk Seleksi Tiap IP
 #Konfigurasi IP Range dan IP Yang Anda Inginkan
