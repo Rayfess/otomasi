@@ -97,13 +97,6 @@ EOL
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
 sleep 5
 
-# Konfigurasi Routing di Ubuntu Server
-echo "Menambahkan konfigurasi routing..."
-ip route add $IPROUTE_ADD via $MIKROTIK_IP
-
-# Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
-
 # Mengaktifkan IP forwarding dan mengonfigurasi IPTables
 echo "Mengaktifkan IP forwarding dan mengonfigurasi IPTables..."
 sudo sysctl -w net.ipv4.ip_forward=1
@@ -117,6 +110,13 @@ sleep 5
 echo "Restarting DHCP server..."
 sudo systemctl restart isc-dhcp-server
 sudo systemctl status isc-dhcp-server
+
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
+
+# Konfigurasi Routing di Ubuntu Server
+echo "Menambahkan konfigurasi routing..."
+ip route add $IPROUTE_ADD via $MIKROTIK_IP
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
 sleep 5
