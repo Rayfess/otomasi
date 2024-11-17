@@ -5,7 +5,8 @@ VLAN_INTERFACE="eth1.10"
 VLAN_ID=10
 IP_ADDR="$IP_Router$IP_Pref"      # IP address untuk interface VLAN di Ubuntu
 DHCP_CONF="/etc/dhcp/dhcpd.conf" #Tempat Konfigurasi DHCP
-NETPLAN_CONF="/etc/netplan/01-netcfg.yaml"
+NETPLAN_CONF="/etc/netplan/01-netcfg.yaml" # Tempat Konfigurasi Netplan
+DDHCP_CONF="/etc/default/isc-dhcp-server" #Tempat konfigurasi default DHCP
 MIKROTIK_IP="192.168.200.1"     # IP MikroTik yang baru
 USER_SWITCH="root"              # Username SSH untuk Cisco Switch
 USER_MIKROTIK="admin"           # Username SSH default MikroTik
@@ -92,6 +93,12 @@ subnet $IP_Subnet netmask $IP_BC {
     default-lease-time 600;
     max-lease-time 7200;
 }
+EOL
+
+#  Konfigurasi DDHCP Server
+echo "Menyiapkan konfigurasi DDHCP server..."
+cat <<EOL | sudo tee $DDHCP_CONF
+INTERFACESv4="$VLAN_INTERFACE"
 EOL
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
