@@ -11,7 +11,7 @@ USER_SWITCH="root"              # Username SSH untuk Cisco Switch
 USER_MIKROTIK="admin"           # Username SSH default MikroTik
 PASSWORD_SWITCH="root"          # Password untuk Cisco Switch
 PASSWORD_MIKROTIK=""            # Kosongkan jika MikroTik tidak memiliki password
-IPROUTE_ADD="192.168.200.0"
+IPROUTE_ADD="192.168.200.0$IP_PREF"
 
 # Konfigurasi Untuk Seleksi Tiap IP
 #Konfigurasi IP Range dan IP Yang Anda Inginkan
@@ -99,7 +99,7 @@ sleep 5
 
 # Konfigurasi Routing di Ubuntu Server
 echo "Menambahkan konfigurasi routing..."
-ip route add $IPROUTE_ADD$IP_Pref via $MIKROTIK_IP
+ip route add $IPROUTE_ADD via $MIKROTIK_IP
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
 sleep 5
