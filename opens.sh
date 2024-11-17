@@ -7,12 +7,12 @@ IP_ADDR="$IP_Router$IP_Pref"      # IP address untuk interface VLAN di Ubuntu
 DHCP_CONF="/etc/dhcp/dhcpd.conf" #Tempat Konfigurasi DHCP
 NETPLAN_CONF="/etc/netplan/01-netcfg.yaml" # Tempat Konfigurasi Netplan
 DDHCP_CONF="/etc/default/isc-dhcp-server" #Tempat konfigurasi default DHCP
-MIKROTIK_IP="192.168.200.1"     # IP MikroTik yang baru
+MIKROTIK_IP="192.168.200.0"     # IP MikroTik yang baru
 USER_SWITCH="root"              # Username SSH untuk Cisco Switch
 USER_MIKROTIK="admin"           # Username SSH default MikroTik
 PASSWORD_SWITCH="root"          # Password untuk Cisco Switch
 PASSWORD_MIKROTIK=""            # Kosongkan jika MikroTik tidak memiliki password
-IPROUTE_ADD="192.168.200.0/24"
+IPROUTE_ADD="192.168.200.1/24"
 
 # Konfigurasi Untuk Seleksi Tiap IP
 #Konfigurasi IP Range dan IP Yang Anda Inginkan
