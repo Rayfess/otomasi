@@ -37,10 +37,16 @@ deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-backports main restricted 
 deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-proposed main restricted universe multiverse
 EOF
 
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
+
 sudo apt update
 sudo apt install sshpass -y
 sudo apt install isc-dhcp-server -y
 sudo apt install iptables-persistent -y
+
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
 
 #  Konfigurasi VLAN di Ubuntu Server
 # echo "Mengonfigurasi VLAN di Ubuntu Server..."
@@ -65,7 +71,13 @@ network:
        addresses: [$IP_Router$IP_Pref]
 EOF
 
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
+
 sudo netplan apply
+
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
 
 #  Konfigurasi DHCP Server
 echo "Menyiapkan konfigurasi DHCP server..."
@@ -76,24 +88,37 @@ subnet $IP_Subnet netmask $IP_BC {
     option routers $IP_Router;
     option subnet-mask $IP_BC;
     option domain-name-servers $IP_DNS;
+    default-lease-time 600;
+    max-lease-time 7200;
 }
 EOL
 
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
 
 # Restart DHCP server untuk menerapkan konfigurasi baru
 echo "Restarting DHCP server..."
 sudo systemctl restart isc-dhcp-server
 sudo systemctl status isc-dhcp-server
 
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
+
 # Konfigurasi Routing di Ubuntu Server
 echo "Menambahkan konfigurasi routing..."
 ip route add $IPROUTE_ADD$IP_Pref via $MIKROTIK_IP
+
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
 
 # Mengaktifkan IP forwarding dan mengonfigurasi IPTables
 echo "Mengaktifkan IP forwarding dan mengonfigurasi IPTables..."
 sudo sysctl -w net.ipv4.ip_forward=1
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
 
 #  Konfigurasi Cisco Switch melalui SSH dengan username dan password root
 echo "Mengonfigurasi Cisco Switch..."
