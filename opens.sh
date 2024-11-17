@@ -62,7 +62,7 @@ network:
   renderer: networkd
   ethernets:
     eth0:
-     dhcp4: true
+      dhcp4: true
     eth1:
       dhcp4: no
   vlans:
@@ -97,14 +97,6 @@ EOL
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
 sleep 5
 
-# Restart DHCP server untuk menerapkan konfigurasi baru
-echo "Restarting DHCP server..."
-sudo systemctl restart isc-dhcp-server
-sudo systemctl status isc-dhcp-server
-
-# Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
-
 # Konfigurasi Routing di Ubuntu Server
 echo "Menambahkan konfigurasi routing..."
 ip route add $IPROUTE_ADD$IP_Pref via $MIKROTIK_IP
@@ -117,6 +109,14 @@ echo "Mengaktifkan IP forwarding dan mengonfigurasi IPTables..."
 sudo sysctl -w net.ipv4.ip_forward=1
 echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+
+# Pemberian Jeda Untuk Mengantisipasi adanya Eror
+sleep 5
+
+# Restart DHCP server untuk menerapkan konfigurasi baru
+echo "Restarting DHCP server..."
+sudo systemctl restart isc-dhcp-server
+sudo systemctl status isc-dhcp-server
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
 sleep 5
