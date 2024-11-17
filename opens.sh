@@ -59,6 +59,7 @@ echo "Mengkonfigurasi netplan..."
 cat <<EOF | sudo tee $NETPLAN_CONF
 network:
   version: 2
+  renderer: networkd
   ethernets:
     eth0:
      dhcp4: true
