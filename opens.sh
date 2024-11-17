@@ -42,9 +42,6 @@ sudo apt install sshpass -y
 sudo apt install isc-dhcp-server -y
 sudo apt install iptables-persistent -y
 
-echo "Mereboot sistem tunggu..."
-reboot
-
 #  Konfigurasi VLAN di Ubuntu Server
 # echo "Mengonfigurasi VLAN di Ubuntu Server..."
 # ip link add link eth1 name $VLAN_INTERFACE type vlan id $VLAN_ID
