@@ -39,7 +39,7 @@ deb http://kartolo.sby.datautama.net.id/ubuntu/ focal-proposed main restricted u
 EOF
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
+sleep 3
 
 sudo apt update
 sudo apt install sshpass -y
@@ -47,7 +47,7 @@ sudo apt install isc-dhcp-server -y
 sudo apt install iptables-persistent -y
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
+sleep 3
 
 #  Konfigurasi VLAN di Ubuntu Server
 # echo "Mengonfigurasi VLAN di Ubuntu Server..."
@@ -74,12 +74,12 @@ network:
 EOF
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
+sleep 3
 
 sudo netplan apply
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
+sleep 3
 
 #  Konfigurasi DHCP Server
 echo "Menyiapkan konfigurasi DHCP server..."
@@ -102,7 +102,7 @@ INTERFACESv4="$VLAN_INTERFACE"
 EOL
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
+sleep 3
 
 # Mengaktifkan IP forwarding dan mengonfigurasi IPTables
 echo "Mengaktifkan IP forwarding dan mengonfigurasi IPTables..."
@@ -111,7 +111,7 @@ echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.conf
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
+sleep 3
 
 # Restart DHCP server untuk menerapkan konfigurasi baru
 echo "Restarting DHCP server..."
@@ -119,14 +119,14 @@ sudo systemctl restart isc-dhcp-server
 sudo timeout 5 systemctl status isc-dhcp-server
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
+sleep 3
 
 # Konfigurasi Routing di Ubuntu Server
 echo "Menambahkan konfigurasi routing..."
 ip route add $IPROUTE_ADD via $MIKROTIK_IP
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
-sleep 5
+sleep 3
 
 #  Konfigurasi Cisco Switch melalui SSH dengan username dan password root
 echo "Mengonfigurasi Cisco Switch..."
