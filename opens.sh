@@ -116,7 +116,7 @@ sleep 3
 # Restart DHCP server untuk menerapkan konfigurasi baru
 echo "Restarting DHCP server..."
 sudo systemctl restart isc-dhcp-server
-sudo timeout 5 systemctl status isc-dhcp-server
+sudo systemctl status isc-dhcp-server &
 
 # Pemberian Jeda Untuk Mengantisipasi adanya Eror
 sleep 3
