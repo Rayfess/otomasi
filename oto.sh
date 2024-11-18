@@ -96,13 +96,16 @@ sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 # Restart DHCP server untuk menerapkan konfigurasi baru
 echo "Restarting DHCP server..."
 sudo systemctl restart isc-dhcp-server
+
+sleep 3
+
 sudo systemctl status isc-dhcp-server &
 
 # Akhir Confi DHCP SERVER
 
 #Konfigurasi Cisco
 echo "Mengkonfigurasi Cisco Mohon Tunggu"
-sudo ufw allow out to 192.168.1.1 port 22
+sudo ufw allow out to 192.168.1.1 port $PORT
 #  Konfigurasi Cisco Switch melalui SSH dengan username dan password root
 echo "Mengonfigurasi Cisco Switch..."
 sshpass -p "$PASSWORD_SWITCH" ssh -o StrictHostKeyChecking=no -p "$PORT" $USER_SWITCH@$SWITCH_IP <<EOF
