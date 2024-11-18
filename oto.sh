@@ -40,8 +40,6 @@ sudo apt update
 sudo apt install sshpass -y
 sudo apt install isc-dhcp-server -y
 sudo apt install iptables-persistent -y
-sudo apt install python3-pip -y
-pip3 install netmiko
 
 #Konfigurasi Pada Netplan
 echo "Mengkonfigurasi netplan..."
